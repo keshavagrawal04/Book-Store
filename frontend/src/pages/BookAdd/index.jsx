@@ -6,8 +6,6 @@ const BookAdd = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(genre);
-        console.log(book);
     }
 
     return (

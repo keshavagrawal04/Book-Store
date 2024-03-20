@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import signup from "../../assets/signup.jpg";
+import { signUpImg } from "../../assets";
 
 const SignUp = () => {
   const [user, setUser] = useState({});
@@ -25,7 +25,7 @@ const SignUp = () => {
       <div className="container p-4">
         <div className="row d-flex justify-content-center">
           <div className="col-xl-5 col-lg-5 mt-lg-5 mt-xl-0 col-md-8 col-sm-12">
-            <img src={signup} alt="signUp" width="100%" />
+            <img src={signUpImg} alt="signUp" width="100%" />
           </div>
           <form
             ref={formRef}
