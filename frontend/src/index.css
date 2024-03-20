@@ -10,3 +10,19 @@
   border-bottom: 3px solid #4475ad;
   border-radius: 2px;
 }
+
+.error {
+  font-size: 15px;
+  font-weight: 550;
+  color: rgb(200, 23, 23);
+  height: 20px !important;
+}
+
+.error2 {
+  height: 20px !important;
+}
+
+.error-border {
+  border: 1.5px solid rgb(200, 23, 23);
+  border-radius: 5px;
+}

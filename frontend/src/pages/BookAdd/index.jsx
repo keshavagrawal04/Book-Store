@@ -1,11 +1,47 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useFormik } from "formik";
+import { bookSchema } from "../../schemas/bookSchema";
+import TextInput from "../../components/TextInput";
+import Select from "react-select";
 
 const BookAdd = () => {
-  const [genre, setGenre] = useState([]);
-  const [book, setBook] = useState({});
+  const genreOptions = [
+    { value: "fiction", label: "Fiction" },
+    { value: "non-fiction", label: "Non-Fiction" },
+    { value: "fantasy", label: "Fantasy" },
+    { value: "sci-fi", label: "Science Fiction" },
+    { value: "mystery", label: "Mystery" },
+    { value: "romance", label: "Romance" },
+  ];
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const formik = useFormik({
+    initialValues: {
+      title: "",
+      description: "",
+      price: "",
+      pages: "",
+      ISBN: "",
+      coverImage: "",
+      genre: [],
+      author: {
+        name: "",
+        email: "",
+        gender: "",
+      },
+      publication: {
+        name: "",
+        date: "",
+      },
+    },
+    validationSchema: bookSchema,
+    onSubmit: async (values) => {
+      values.genre = values.genre.map((genre) => genre.value);
+      console.log(values);
+    },
+  });
+
+  const handleGenreChange = (selectedGenre) => {
+    formik.setFieldValue("genre", selectedGenre);
   };
 
   return (
@@ -17,72 +53,71 @@ const BookAdd = () => {
             <div className="col-12 col-lg-5 col-md-8 border rounded p-4">
               <p className="ms-2 fs-5 fw-bold">Book Details</p>
               <div className="mb-3">
-                <input
+                <TextInput
+                  name="title"
                   type="text"
-                  onChange={(e) => {
-                    setBook({ ...book, title: e.target.value });
-                  }}
-                  className="form-control"
-                  id="title"
-                  placeholder="Title"
+                  formik={formik}
+                  placeholder="Enter Book Title"
                 />
               </div>
               <div className="mb-3">
                 <textarea
                   className="form-control"
-                  onChange={(e) => {
-                    setBook({ ...book, description: e.target.value });
-                  }}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.description}
                   id="description"
-                  style={{ resize: "none" }}
                   placeholder="Description"
                   rows="6"
-                ></textarea>
+                  style={{
+                    border: `1.5px solid ${
+                      formik.touched.description && formik.errors.description
+                        ? "rgb(200, 23, 23)"
+                        : "#01256033"
+                    }`,
+                    resize: "none",
+                  }}
+                />
+                {formik.touched.description && formik.errors.description ? (
+                  <div className="text-danger error">
+                    {formik.errors.description}
+                  </div>
+                ) : (
+                  <div className="error2"></div>
+                )}
               </div>
               <div className="row mb-3">
                 <div className="col-6">
-                  <input
+                  <TextInput
+                    name="price"
                     type="number"
-                    onChange={(e) => {
-                      setBook({ ...book, price: e.target.value });
-                    }}
-                    className="form-control"
-                    id="pages"
-                    placeholder="Price"
+                    formik={formik}
+                    placeholder="Enter Book Price"
                   />
                 </div>
                 <div className="col-6">
-                  <input
+                  <TextInput
+                    name="pages"
                     type="number"
-                    onChange={(e) => {
-                      setBook({ ...book, pages: e.target.value });
-                    }}
-                    className="form-control"
-                    id="pages"
-                    placeholder="Pages"
+                    formik={formik}
+                    placeholder="Enter Book Pages"
                   />
                 </div>
               </div>
               <div className="mb-3">
-                <input
+                <TextInput
+                  name="ISBN"
                   type="number"
-                  onChange={(e) => {
-                    setBook({ ...book, ISBN: e.target.value });
-                  }}
-                  className="form-control"
-                  id="pages"
-                  placeholder="ISBN"
+                  formik={formik}
+                  placeholder="Enter ISBN Number"
                 />
               </div>
               <div className="mb-3">
-                <input
+                <TextInput
+                  name="coverImage"
                   type="text"
-                  className="form-control"
-                  onChange={(e) => {
-                    setBook({ ...book, coverImage: e.target.value });
-                  }}
-                  id="coverImage"
-                  placeholder="Cover Image URL"
+                  formik={formik}
+                  placeholder="Enter Cover Image Url"
                 />
               </div>
             </div>
@@ -94,46 +129,87 @@ const BookAdd = () => {
                   <div className="mb-3">
                     <input
                       type="text"
-                      onChange={(e) => {
-                        setBook({ ...book, author: { name: e.target.value } });
-                      }}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
                       className="form-control"
-                      id="name"
-                      placeholder="Name"
+                      id="author.name"
+                      value={formik.values.author.name}
+                      placeholder="Enter Author Name"
+                      style={{
+                        border: `1.5px solid ${
+                          formik.touched.author?.name &&
+                          formik.errors.author?.name
+                            ? "rgb(200, 23, 23)"
+                            : "#01256033"
+                        }`,
+                      }}
                     />
+                    {formik.touched.author?.name &&
+                    formik.errors.author?.name ? (
+                      <div className="text-danger error">
+                        {formik.errors.author?.name}
+                      </div>
+                    ) : (
+                      <div className="error2"></div>
+                    )}
                   </div>
                   <div className="row mb-3">
                     <div className="col-8">
                       <input
-                        type="email"
-                        onChange={(e) => {
-                          setBook({
-                            ...book,
-                            author: { email: e.target.value },
-                          });
-                        }}
+                        type="text"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                         className="form-control"
-                        id="email"
-                        placeholder="Email"
+                        id="author.email"
+                        value={formik.values.author.email}
+                        placeholder="Enter Author Email"
+                        style={{
+                          border: `1.5px solid ${
+                            formik.touched.author?.email &&
+                            formik.errors.author?.email
+                              ? "rgb(200, 23, 23)"
+                              : "#01256033"
+                          }`,
+                        }}
                       />
+                      {formik.touched.author?.email &&
+                      formik.errors.author?.email ? (
+                        <div className="text-danger error">
+                          {formik.errors.author?.email}
+                        </div>
+                      ) : (
+                        <div className="error2"></div>
+                      )}
                     </div>
                     <div className="col-4">
                       <select
-                        onChange={(e) => {
-                          setBook({
-                            ...book,
-                            author: { gender: e.target.value },
-                          });
-                        }}
-                        name="gender"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.author.gender}
                         className="form-control"
-                        id="gender"
+                        id="author.gender"
+                        style={{
+                          border: `1.5px solid ${
+                            formik.touched.author?.gender &&
+                            formik.errors.author?.gender
+                              ? "rgb(200, 23, 23)"
+                              : "#01256033"
+                          }`,
+                        }}
                       >
                         <option value="gender">Gender</option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                         <option value="other">Other</option>
                       </select>
+                      {formik.touched.author?.gender &&
+                      formik.errors.author?.gender ? (
+                        <div className="text-danger error">
+                          {formik.errors.author?.gender}
+                        </div>
+                      ) : (
+                        <div className="error2"></div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -143,118 +219,82 @@ const BookAdd = () => {
                   <div className="mb-3">
                     <input
                       type="text"
-                      onChange={(e) => {
-                        setBook({
-                          ...book,
-                          publication: { name: e.target.value },
-                        });
-                      }}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
                       className="form-control"
-                      id="name"
-                      placeholder="Name"
+                      id="publication.name"
+                      value={formik.values.publication.name}
+                      placeholder="Enter Publication Name"
+                      style={{
+                        border: `1.5px solid ${
+                          formik.touched.publication?.name &&
+                          formik.errors.publication?.name
+                            ? "rgb(200, 23, 23)"
+                            : "#01256033"
+                        }`,
+                      }}
                     />
+                    {formik.touched.publication?.name &&
+                    formik.errors.publication?.name ? (
+                      <div className="text-danger error">
+                        {formik.errors.publication?.name}
+                      </div>
+                    ) : (
+                      <div className="error2"></div>
+                    )}
                   </div>
                   <div className="mb-3">
                     <input
-                      type="text"
-                      onChange={(e) => {
-                        setBook({ ...book, author: { year: e.target.value } });
+                      type="date"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      className="form-control error-border"
+                      id="publication.date"
+                      value={formik.values.publication.date}
+                      placeholder="Enter Publication Date"
+                      style={{
+                        border: `1.5px solid ${
+                          formik.touched.publication?.date &&
+                          formik.errors.publication?.date
+                            ? "rgb(200, 23, 23)"
+                            : "#01256033"
+                        }`,
                       }}
-                      className="form-control"
-                      id="year"
-                      placeholder="Year"
                     />
+                    {formik.touched.publication?.date &&
+                    formik.errors.publication?.date ? (
+                      <div className="text-danger error">
+                        {formik.errors.publication?.date}
+                      </div>
+                    ) : (
+                      <div className="error2"></div>
+                    )}
                   </div>
                 </div>
                 {/* Publisher Details */}
                 <p className="ms-2 fs-5 fw-bold">Genre</p>
                 <div className="col d-flex gap-2 flex-wrap">
-                  <div className="">
-                    <input
-                      onSelect={(e) => {
-                        setGenre((prev) => prev.push(e.target.value));
-                      }}
-                      className="form-check-input"
-                      type="checkbox"
-                      id="general"
-                      value="general"
+                  <div className="col-12">
+                    <Select
+                      onChange={handleGenreChange}
+                      options={genreOptions}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.genre || []}
+                      placeholder="Select Genre"
+                      isMulti
+                      className={
+                        formik.touched?.genre && formik.errors?.genre
+                          ? "error-border"
+                          : "border"
+                      }
                     />
-                    <label className="form-check-label ms-2" htmlFor="general">
-                      General
-                    </label>
-                  </div>
-                  <div className="">
-                    <input
-                      onSelect={(e) => {
-                        setGenre((prev) => prev.push(e.target.value));
-                      }}
-                      className="form-check-input"
-                      type="checkbox"
-                      id="fiction"
-                      value="fiction"
-                    />
-                    <label className="form-check-label ms-2" htmlFor="fiction">
-                      Fiction
-                    </label>
-                  </div>
-                  <div className="">
-                    <input
-                      onSelect={(e) => {
-                        setGenre((prev) => prev.push(e.target.value));
-                      }}
-                      className="form-check-input"
-                      type="checkbox"
-                      id="non-fiction"
-                      value="non-fiction"
-                    />
-                    <label
-                      className="form-check-label ms-2"
-                      htmlFor="non-fiction"
-                    >
-                      Non-Fiction
-                    </label>
-                  </div>
-                  <div className="">
-                    <input
-                      onSelect={(e) => {
-                        setGenre((prev) => prev.push(e.target.value));
-                      }}
-                      className="form-check-input"
-                      type="checkbox"
-                      id="drama"
-                      value="drama"
-                    />
-                    <label className="form-check-label ms-2" htmlFor="drama">
-                      Drama
-                    </label>
-                  </div>
-                  <div className="">
-                    <input
-                      onSelect={(e) => {
-                        setGenre((prev) => prev.push(e.target.value));
-                      }}
-                      className="form-check-input"
-                      type="checkbox"
-                      id="horror"
-                      value="horror"
-                    />
-                    <label className="form-check-label ms-2" htmlFor="horror">
-                      Horror
-                    </label>
-                  </div>
-                  <div className="">
-                    <input
-                      onSelect={(e) => {
-                        setGenre((prev) => prev.push(e.target.value));
-                      }}
-                      className="form-check-input"
-                      type="checkbox"
-                      id="comedy"
-                      value="comedy"
-                    />
-                    <label className="form-check-label ms-2" htmlFor="comedy">
-                      Comedy
-                    </label>
+                    {formik.touched.genre && formik.errors.genre ? (
+                      <div className="text-danger error">
+                        {formik.errors.genre}
+                      </div>
+                    ) : (
+                      <div className="error2"></div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -263,7 +303,8 @@ const BookAdd = () => {
           <div className="row d-flex justify-content-center gap-2">
             <div className="col-4 d-flex justify-content-center">
               <button
-                onClick={handleSubmit}
+                type="button"
+                onClick={formik.handleSubmit}
                 style={{ backgroundColor: "#4475ad" }}
                 className="btn text-light"
               >
