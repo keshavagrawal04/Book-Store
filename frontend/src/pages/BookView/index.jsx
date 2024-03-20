@@ -1,15 +1,17 @@
 import { motion } from "framer-motion";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { FaUserEdit } from "react-icons/fa";
 import { IoIosPricetag } from "react-icons/io";
 import { GiPapers } from "react-icons/gi";
 import { FaCartShopping } from "react-icons/fa6";
 import { BiSolidPurchaseTag } from "react-icons/bi";
 import { useGetBookByIdQuery } from "../../services/apiServices";
+import { HiArrowSmLeft } from "react-icons/hi";
 
 const BookView = () => {
   const { bookId } = useParams();
   const { data } = useGetBookByIdQuery(bookId);
+  const navigate = useNavigate();
 
   const addToCart = (e) => {
     e.preventDefault();
@@ -18,8 +20,19 @@ const BookView = () => {
 
   return (
     <>
+      <div className="container p-2 ps-3 d-flex gap-3 align-items-center">
+        <HiArrowSmLeft
+          style={{ backgroundColor: "#4475ad", cursor: "pointer" }}
+          size={35}
+          onClick={() => {
+            navigate(-1);
+          }}
+          className="border text-light rounded-circle p-1"
+        />
+        <p className="fs-5 mb-0 fw-bold">View Book</p>
+      </div>
       <motion.div
-        className="container p-2 my-5"
+        className="container p-2"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -27,7 +40,7 @@ const BookView = () => {
         <div className="row d-flex align-items-center">
           <div className="col-lg-4 col-md-12 col-sm-12 d-flex justify-content-center">
             <motion.img
-              whileHover={{ scale: 1.1 }}
+              whileHover={{ scale: 1.05 }}
               style={{ cursor: "pointer" }}
               className="border rounded-4"
               width={350}

@@ -7,7 +7,7 @@ import { useGetBooksQuery } from "../../services/apiServices";
 
 const Books = () => {
   const ref = useRef();
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(4);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterGenre, setFilterGenre] = useState("");
   const [page, setPage] = useState(1);
@@ -20,7 +20,7 @@ const Books = () => {
   });
 
   const handleNext = () => {
-    if (!(page >= data.totalPages)) {
+    if (!(page >= data.data?.totalPages)) {
       setPage((prev) => prev + 1);
     }
   };
@@ -134,9 +134,9 @@ const Books = () => {
                 className="form-select fw-bold border-none"
                 onChange={handlePageSize}
               >
-                <option value={5}>5</option>
-                <option defaultValue={10}>10</option>
-                <option value={15}>15</option>
+                <option value={4}>4</option>
+                <option defaultValue={8}>8</option>
+                <option value={12}>12</option>
               </select>
             </div>
             <div className="d-flex flex-row justify-content-center gap-2">
@@ -144,7 +144,7 @@ const Books = () => {
                 style={{ backgroundColor: "#4475ad", cursor: "pointer" }}
                 onClick={handlePrev}
                 size={35}
-                className="border text-light rounded-2"
+                className="border text-light rounded-circle p-1"
               />
               <p className="fw-bold fs-5 mt-1">
                 {page} of {data && data?.data?.totalPages}
@@ -152,7 +152,7 @@ const Books = () => {
               <HiArrowSmRight
                 style={{ backgroundColor: "#4475ad", cursor: "pointer" }}
                 onClick={handleNext}
-                className="border text-light rounded-2"
+                className="border text-light rounded-circle p-1"
                 size={35}
               />
             </div>
