@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { pageNotFoundImg } from "../../assets";
 
 const PageNotFound = () => {
@@ -11,12 +12,13 @@ const PageNotFound = () => {
         >
           Page Not Found
         </p>
-        <button
+        <Link
           className="btn text-light fw-bold px-5"
           style={{ backgroundColor: "#F0565F" }}
+          to="/"
         >
           Go Home
-        </button>
+        </Link>
       </div>
     </div>
   );

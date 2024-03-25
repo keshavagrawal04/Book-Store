@@ -19,9 +19,10 @@ const SignIn = () => {
       try {
         const { data, error } = await loginUser(values);
         error ? toast.error(error.data.message) : toast.success(data.message);
-        setTimeout(() => {
-          navigate(`/signin`);
-        }, 2000);
+        localStorage.setItem("profileImage", data.data.profileImage);
+        // setTimeout(() => {
+        //   navigate(`/signin`);
+        // }, 2000);
       } catch (error) {
         console.log(error.message);
       }
