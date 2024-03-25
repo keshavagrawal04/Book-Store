@@ -10,10 +10,10 @@ const Header = () => {
       style={{ backgroundColor: "#fff", zIndex: "1" }}
       className="position-sticky w-100 top-0 border"
     >
-      <Container>
-        <Navbar.Brand href="#home" className="fs-2">
+      <Container fluid className="mx-5">
+        <Link to="/" className="fs-2">
           <img src={bookStoreImg} width={150} />
-        </Navbar.Brand>
+        </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav">
           <BiMenu size={30} />
         </Navbar.Toggle>
@@ -29,7 +29,7 @@ const Header = () => {
               Order
             </NavLink>
           </Nav>
-          <Nav className="ms-auto fs-5 d-flex gap-2 justify-content-center gap-4 mb-0">
+          <Nav className="ms-auto fs-5 d-flex gap-1 justify-content-center mb-0">
             <NavLink
               to="/signin"
               style={{ backgroundColor: "#4475ad" }}

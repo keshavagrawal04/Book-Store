@@ -26,3 +26,9 @@
   border: 1.5px solid rgb(200, 23, 23);
   border-radius: 5px;
 }
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

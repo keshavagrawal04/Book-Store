@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { FaUserEdit } from "react-icons/fa";
 import { IoIosPricetag } from "react-icons/io";
