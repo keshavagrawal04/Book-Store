@@ -5,7 +5,6 @@ const saveBook = async (payload) => {
     const book = await Book.create(payload);
     return book;
   } catch (error) {
-    console.log(error.message);
     throw error;
   }
 };
@@ -15,7 +14,6 @@ const findBookById = async (id) => {
     const book = await Book.findById({ _id: id });
     return book;
   } catch (error) {
-    console.log(error.message);
     throw error;
   }
 };
@@ -35,7 +33,6 @@ const findAllBooks = async (query) => {
     books = await books.skip(query.pageSize * query.page).limit(query.pageSize);
     return { books, totalPages: Math.ceil(allBooks.length / query.pageSize) };
   } catch (error) {
-    console.log(error.message);
     throw error;
   }
 };
@@ -45,7 +42,6 @@ const deleteBookById = async (id) => {
     const book = await Book.findOneAndDelete({ _id: id });
     return book;
   } catch (error) {
-    console.log(error.message);
     throw error;
   }
 };
@@ -59,7 +55,6 @@ const updateBookById = async (id, payload) => {
     );
     return book;
   } catch (error) {
-    console.log(error.message);
     throw error;
   }
 };

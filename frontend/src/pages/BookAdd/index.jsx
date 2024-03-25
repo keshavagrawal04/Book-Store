@@ -35,7 +35,6 @@ const BookAdd = () => {
     validationSchema: bookSchema,
     onSubmit: async (values) => {
       values.genre = values.genre.map((genre) => genre.value);
-      console.log(values);
     },
   });
 
