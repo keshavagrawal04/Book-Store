@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-export const userSchema = Yup.object().shape({
+export const signUpSchema = Yup.object().shape({
   fullName: Yup.string().required("Full Name is required"),
   email: Yup.string()
     .required("Email is required")
@@ -32,4 +32,28 @@ export const userSchema = Yup.object().shape({
   confirmPassword: Yup.string()
     .required("Confirm Password is required")
     .oneOf([Yup.ref("password")], "Passwords must match"),
+});
+
+export const signInSchema = Yup.object().shape({
+  email: Yup.string()
+    .required("Email is required")
+    .matches(
+      /^\w+[-.\w]*@\w+[-.\w]*(\.\w{2,3})+$/,
+      "Please enter a valid email address"
+    ),
+  password: Yup.string()
+    .required("Password is required")
+    .min(8, "Password must be at least 8 characters long")
+    .required("Password is required")
+    .min(8, "Password must be at least 8 characters")
+    .matches(/^(?=.*[A-Za-z])/, "Password must contain at least one letter")
+    .matches(/^(?=.*\d)/, "Password must contain at least one number")
+    .matches(
+      /^(?=.*[@$!%*#?&])/,
+      "Password must contain at least one special character"
+    )
+    .matches(
+      /^[A-Za-z\d@$!%*#?&]+$/,
+      "Password must not contain invalid characters"
+    ),
 });

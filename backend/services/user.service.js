@@ -12,11 +12,19 @@ const registerUser = async (payload) => {
 const findUserByEmailId = async (email) => {
   try {
     const user = await User.findOne({ email: email });
-    console.log(user);
     return user ? true : false;
   } catch (error) {
     throw error;
   }
 };
 
-module.exports = { registerUser, findUserByEmailId };
+const loginUser = async (payload) => {
+  try {
+    const user = await User.findOne({ email: payload.email });
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
+
+module.exports = { registerUser, findUserByEmailId, loginUser };

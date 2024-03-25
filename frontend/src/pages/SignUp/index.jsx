@@ -1,18 +1,16 @@
-import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { Toaster, toast } from "react-hot-toast";
 
 import { signUpImg } from "../../assets";
 import TextInput from "../../components/TextInput";
-import { userSchema } from "../../schemas/userSchema";
+import { signUpSchema } from "../../schemas/userSchema";
 import { useRegisterUserMutation } from "../../services/apiServices";
 
 const SignUp = () => {
-  const formRef = useRef();
-  const form = formRef.current;
   const [registerUser] = useRegisterUserMutation();
   const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: {
       fullName: "",
@@ -23,13 +21,11 @@ const SignUp = () => {
       confirmPassword: "",
       profileImage: "",
     },
-    validationSchema: userSchema,
+    validationSchema: signUpSchema,
     onSubmit: async (values) => {
       try {
-        console.log(values);
         const { data, error } = await registerUser(values);
         error ? toast.error(error.data.message) : toast.success(data.message);
-        form.reset();
         setTimeout(() => {
           navigate(`/signin`);
         }, 2000);
@@ -47,7 +43,6 @@ const SignUp = () => {
             <img src={signUpImg} alt="signUp" width="100%" />
           </div>
           <form
-            ref={formRef}
             className="col-xl-5 col-lg-5 col-md-8 col-sm-12 d-flex flex-column align-items-center p-xl-5 pt-xl-0 p-sm-4 pt-4"
             onSubmit={formik.handleSubmit}
           >

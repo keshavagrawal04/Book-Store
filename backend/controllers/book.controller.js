@@ -8,8 +8,10 @@ const addBook = async (req, res) => {
       .status(201)
       .json({ message: responseMessage.BOOK_ADD, data: book });
   } catch (error) {
-    console.log(error.message);
-    throw error;
+    res.status(500).json({
+      message: responseMessage.INTERNAL_SERVER_ERROR,
+      error: error.message,
+    });
   }
 };
 
@@ -22,8 +24,10 @@ const getBookById = async (req, res) => {
       .status(200)
       .json({ message: responseMessage.BOOK_RETRIEVED, data: book });
   } catch (error) {
-    console.log(error.message);
-    throw error;
+    res.status(500).json({
+      message: responseMessage.INTERNAL_SERVER_ERROR,
+      error: error.message,
+    });
   }
 };
 
@@ -43,8 +47,10 @@ const getAllBooks = async (req, res) => {
       .status(200)
       .json({ message: responseMessage.BOOKS_RETRIEVED, data: books });
   } catch (error) {
-    console.log(error.message);
-    throw error;
+    res.status(500).json({
+      message: responseMessage.INTERNAL_SERVER_ERROR,
+      error: error.message,
+    });
   }
 };
 
@@ -58,7 +64,10 @@ const updateBook = async (req, res) => {
       .status(200)
       .json({ message: responseMessage.BOOK_UPDATE, data: book });
   } catch (error) {
-    console.log(error.message);
+    res.status(500).json({
+      message: responseMessage.INTERNAL_SERVER_ERROR,
+      error: error.message,
+    });
   }
 };
 
@@ -72,8 +81,10 @@ const deleteBook = async (req, res) => {
       .status(200)
       .json({ message: responseMessage.BOOK_DELETE, data: book });
   } catch (error) {
-    console.log(error.message);
-    throw error;
+    res.status(500).json({
+      message: responseMessage.INTERNAL_SERVER_ERROR,
+      error: error.message,
+    });
   }
 };
 

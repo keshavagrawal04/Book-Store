@@ -12,6 +12,13 @@ export const bookStoreApi = createApi({
         body: payload,
       }),
     }),
+    loginUser: builder.mutation({
+      query: (payload) => ({
+        url: "/user/login",
+        method: "POST",
+        body: payload,
+      }),
+    }),
     // Books Api's
     getBooks: builder.query({
       query: ({ pageSize, page, searchTerm, filterGenre }) =>
@@ -24,7 +31,8 @@ export const bookStoreApi = createApi({
 });
 
 export const {
+  useRegisterUserMutation,
+  useLoginUserMutation,
   useGetBooksQuery,
   useGetBookByIdQuery,
-  useRegisterUserMutation,
 } = bookStoreApi;

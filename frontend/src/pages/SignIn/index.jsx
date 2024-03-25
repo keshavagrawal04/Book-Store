@@ -1,14 +1,32 @@
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import { Toaster, toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
+
+import { signInSchema } from "../../schemas/userSchema";
+import { useLoginUserMutation } from "../../services/apiServices";
+import TextInput from "../../components/TextInput";
 import { signInImg } from "../../assets";
 
 const SignIn = () => {
-  const [user, setUser] = useState(null);
+  const [loginUser] = useLoginUserMutation();
+  const navigate = useNavigate();
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-  };
-
+  const formik = useFormik({
+    initialValues: { email: "", password: "" },
+    validationSchema: signInSchema,
+    onSubmit: async (values) => {
+      try {
+        const { data, error } = await loginUser(values);
+        error ? toast.error(error.data.message) : toast.success(data.message);
+        setTimeout(() => {
+          navigate(`/signin`);
+        }, 2000);
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+  });
   return (
     <>
       <div className="container p-4 my-3">
@@ -18,31 +36,24 @@ const SignIn = () => {
           </div>
           <form
             className="col-xl-5 col-lg-5 col-md-8 col-sm-12 d-flex flex-column align-items-center p-xl-5 p-sm-4 pt-4"
-            onSubmit={handleLogin}
+            onSubmit={formik.handleSubmit}
           >
             <h2 className="pt-2">Sign In</h2>
             <h4 className="mb-5">Sign In Your Account</h4>
-            <div className="input-group mb-3">
-              <input
-                onChange={(e) => setUser({ ...user, email: e.target.value })}
-                type="email"
-                className="form-control fs-6"
-                placeholder="Email Address"
-                aria-label="Email Address"
-                aria-describedby="basic-addon1"
-                required
+            <div className="w-100 mb-3">
+              <TextInput
+                name="email"
+                type="text"
+                formik={formik}
+                placeholder="Email"
               />
             </div>
-            <div className="input-group mb-3">
-              <input
-                onChange={(e) => setUser({ ...user, password: e.target.value })}
+            <div className="w-100 mb-3">
+              <TextInput
+                name="password"
                 type="password"
-                className="form-control fs-6"
+                formik={formik}
                 placeholder="Password"
-                aria-label="Password"
-                aria-describedby="basic-addon1"
-                required
-                autoComplete="auto"
               />
             </div>
             <div className="input-group text-right">
@@ -63,6 +74,7 @@ const SignIn = () => {
           </form>
         </div>
       </div>
+      <Toaster position="top-center" reverseOrder={false} />;
     </>
   );
 };
