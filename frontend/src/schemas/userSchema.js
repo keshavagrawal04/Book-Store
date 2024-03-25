@@ -2,7 +2,12 @@ import * as Yup from "yup";
 
 export const userSchema = Yup.object().shape({
   fullName: Yup.string().required("Full Name is required"),
-  email: Yup.string().required("Email is required"),
+  email: Yup.string()
+    .required("Email is required")
+    .matches(
+      /^\w+[-.\w]*@\w+[-.\w]*(\.\w{2,3})+$/,
+      "Please enter a valid email address"
+    ),
   contactNumber: Yup.string()
     .matches(/^[0-9]{10}$/, {
       message: "Contact Number must be exactly 10 digits",

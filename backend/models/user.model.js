@@ -3,27 +3,36 @@ const mongoose = require("mongoose");
 const userSchema = mongoose.Schema({
   fullName: {
     type: String,
-    require: true,
+    required: true,
   },
   email: {
     type: String,
-    require: true,
+    required: true,
+    unique: true,
+    validate: {
+      validator: (email) =>
+        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email),
+      message: "Please enter a valid email address",
+    },
   },
   contactNumber: {
     type: Number,
-    require: true,
+    required: true,
   },
   dateOfBirth: {
     type: Date,
-    require: true,
+    required: true,
   },
   password: {
     type: String,
-    require: true,
+    required: true,
   },
   profileImage: {
     type: String,
-    require: true,
+    required: true,
+  },
+  cart: {
+    ref: Cart,
   },
 });
 module.exports = mongoose.model("User", userSchema);
