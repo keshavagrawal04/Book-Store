@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { signInImg } from "../../assets";
 
 const SignIn = () => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();

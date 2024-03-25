@@ -31,8 +31,5 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  cart: {
-    ref: Cart,
-  },
 });
 module.exports = mongoose.model("User", userSchema);
