@@ -32,5 +32,4 @@ export const userSchema = Yup.object().shape({
   confirmPassword: Yup.string()
     .required("Confirm Password is required")
     .oneOf([Yup.ref("password")], "Passwords must match"),
-  profileImage: Yup.mixed().required("Profile Image is required"),
 });

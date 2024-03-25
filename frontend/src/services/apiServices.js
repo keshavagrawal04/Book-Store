@@ -4,6 +4,15 @@ export const bookStoreApi = createApi({
   reducerPath: "bookStoreApi",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000/api/v1/" }),
   endpoints: (builder) => ({
+    // User Api's
+    registerUser: builder.mutation({
+      query: (payload) => ({
+        url: "/user/register",
+        method: "POST",
+        body: payload,
+      }),
+    }),
+    // Books Api's
     getBooks: builder.query({
       query: ({ pageSize, page, searchTerm, filterGenre }) =>
         `book/get/?pageSize=${pageSize}&page=${page}&title=${searchTerm}&genre=${filterGenre}`,
@@ -14,4 +23,8 @@ export const bookStoreApi = createApi({
   }),
 });
 
-export const { useGetBooksQuery, useGetBookByIdQuery } = bookStoreApi;
+export const {
+  useGetBooksQuery,
+  useGetBookByIdQuery,
+  useRegisterUserMutation,
+} = bookStoreApi;

@@ -9,4 +9,14 @@ const registerUser = async (payload) => {
   }
 };
 
-module.exports = { registerUser };
+const findUserByEmailId = async (email) => {
+  try {
+    const user = await User.findOne({ email: email });
+    console.log(user);
+    return user ? true : false;
+  } catch (error) {
+    throw error;
+  }
+};
+
+module.exports = { registerUser, findUserByEmailId };

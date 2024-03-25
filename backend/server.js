@@ -9,7 +9,8 @@ app.get("/", (req, res) => {
   res.status(200).json({ message: "Index Route For Book Store" });
 });
 
-const { bookRoutes } = require("./routes");
+const { bookRoutes, userRoutes } = require("./routes");
 app.use("/api/v1/book/", bookRoutes);
+app.use("/api/v1/user/", userRoutes);
 
 module.exports = app;

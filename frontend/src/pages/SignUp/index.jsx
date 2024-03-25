@@ -1,12 +1,18 @@
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
+import { Toaster, toast } from "react-hot-toast";
+
 import { signUpImg } from "../../assets";
 import TextInput from "../../components/TextInput";
 import { userSchema } from "../../schemas/userSchema";
+import { useRegisterUserMutation } from "../../services/apiServices";
 
 const SignUp = () => {
   const formRef = useRef();
-
+  const form = formRef.current;
+  const [registerUser] = useRegisterUserMutation();
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       fullName: "",
@@ -18,11 +24,15 @@ const SignUp = () => {
       profileImage: "",
     },
     validationSchema: userSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       try {
         console.log(values);
-        const form = formRef.current;
+        const { data, error } = await registerUser(values);
+        error ? toast.error(error.data.message) : toast.success(data.message);
         form.reset();
+        setTimeout(() => {
+          navigate(`/signin`);
+        }, 2000);
       } catch (error) {
         console.log(error.message);
       }
@@ -93,9 +103,6 @@ const SignUp = () => {
                 autocomplete="new-password"
               />
             </div>
-            <div className="w-100 mb-3">
-              <TextInput name="profileImage" type="file" formik={formik} />
-            </div>
             <button
               style={{ backgroundColor: "#4475ad" }}
               className="btn text-light fs-6 p-2 mt-2 px-4"
@@ -106,6 +113,7 @@ const SignUp = () => {
           </form>
         </div>
       </div>
+      <Toaster position="top-center" reverseOrder={false} />;
     </>
   );
 };

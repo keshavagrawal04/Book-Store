@@ -29,7 +29,6 @@ const userSchema = mongoose.Schema({
   },
   profileImage: {
     type: String,
-    required: true,
   },
 });
 module.exports = mongoose.model("User", userSchema);
