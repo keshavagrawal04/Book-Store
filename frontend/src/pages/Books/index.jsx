@@ -1,12 +1,10 @@
-import React, { useEffect, useState, useRef } from "react";
-import axios from "axios";
+import { useState } from "react";
 import BookCard from "../../components/BookCard";
 import { HiArrowSmLeft, HiArrowSmRight } from "react-icons/hi";
-import { IoSearch } from "react-icons/io5";
+import { IoSearch, IoFilter } from "react-icons/io5";
 import { useGetBooksQuery } from "../../services/apiServices";
 
 const Books = () => {
-  const ref = useRef();
   const [pageSize, setPageSize] = useState(4);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterGenre, setFilterGenre] = useState("");
@@ -63,15 +61,9 @@ const Books = () => {
 
   return (
     <>
-      <div ref={ref} className="container">
+      <div className="container">
         <div className="row mt-4">
           <div className="col-xl-4 col-lg-5 col-md-6 ms-md-3 ms-0 d-flex align-items-center">
-            <p
-              style={{ backgroundColor: "#4475ad" }}
-              className="d-flex mb-0 justify-content-center align-items-center border p-2 rounded text-light"
-            >
-              <IoSearch size={22} />
-            </p>
             <input
               value={searchTerm}
               onChange={handleSearchTerm}
@@ -82,14 +74,14 @@ const Books = () => {
               id="search"
               style={{ boxShadow: "none" }}
             />
-          </div>
-          <div className="col-xl-4 col-lg-5 col-md-6 ms-md-3 ms-0 d-flex align-items-center">
             <p
               style={{ backgroundColor: "#4475ad" }}
               className="d-flex mb-0 justify-content-center align-items-center border p-2 rounded text-light"
             >
               <IoSearch size={22} />
             </p>
+          </div>
+          <div className="col-xl-4 col-lg-5 col-md-6 ms-md-3 ms-0 d-flex align-items-center">
             <select
               style={{ boxShadow: "none" }}
               value={filterGenre}
@@ -102,6 +94,12 @@ const Books = () => {
               <option value="drama">Drama</option>
               <option value="horror">Horror</option>
             </select>
+            <p
+              style={{ backgroundColor: "#4475ad" }}
+              className="d-flex mb-0 justify-content-center align-items-center border p-2 rounded text-light"
+            >
+              <IoFilter size={22} />
+            </p>
           </div>
         </div>
         {!data?.data?.books.length ? (
