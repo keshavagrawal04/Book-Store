@@ -1,19 +1,21 @@
-import { Link } from "react-router-dom";
+import { heroImage } from "../../assets";
 
 const Home = () => {
   return (
-    <div className="container p-5 m-5">
-      <div className="row my-5">
-        <div className="col-md-12 text-center my-5">
-          <h1 className="display-4">Welcome to Our Bookstore!</h1>
-          <p className="lead">Find all your favorite books here.</p>
-          <Link
-            to="/books"
-            className="btn btn-primary mb-5 fs-5 fw-bold px-4"
-            style={{ backgroundColor: "#4475ad" }}
-          >
-            Explore Our Books
-          </Link>
+    <div className="container">
+      <div className="row">
+        <div className="col d-flex flex-column m-auto">
+          <h1 className="d-flex text-center">
+            Turning Pages: Discover Worlds Within Worlds
+          </h1>
+          <p>
+            Turning Pages: Unveil Worlds, Explore Stories, and Embrace
+            Imagination. Where Every Chapter Holds Adventure, Wisdom, and the
+            Joy of Discovery.
+          </p>
+        </div>
+        <div className="col p-4">
+          <img src={heroImage} className="w-100 h-100" alt="Hero Image" />
         </div>
       </div>
     </div>

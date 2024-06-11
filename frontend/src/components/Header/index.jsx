@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { BiMenu } from "react-icons/bi";
 import { FaCartShopping } from "react-icons/fa6";
 import { FaBoxOpen } from "react-icons/fa";
-import { bookStoreImg } from "../../assets";
+import { logo } from "../../assets";
 
 const Header = () => {
   const profileImage = localStorage.getItem("profileImage");
@@ -16,7 +16,7 @@ const Header = () => {
     >
       <Container>
         <Link to="/" className="fs-2">
-          <img src={bookStoreImg} width={150} />
+          <img src={logo} width={150} />
         </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav">
           <BiMenu size={30} />
